@@ -118,13 +118,16 @@ article {
 
   aside {
     width: 100%;
-    padding: 20px;
-    box-sizing: border-box;
   }
 
-  section {
-    width: 100%;
-    box-sizing: border-box;
+  aside ul {
+    display: flex;
+    gap: 20px;
+    justify-content: space-around;
+  }
+
+  aside li {
+    margin-bottom: 0;
   }
 
 }
