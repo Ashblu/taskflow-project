@@ -111,20 +111,19 @@ article {
   display: flex;
   align-items: center;
   gap: 16px;
+  flex-wrap: wrap;
   
 }
 
 .titulo {
-  flex: 1;
-  min-width: 0;
-  white-space: nowrap;
+  flex: 1 1 100%;
+  
 }
 
 .categoria {
-  flex: 2;
-  width: 120px;
-  font-size: 12px;
-  text-align: left;
+  flex: 1 1 auto;
+  font-size: 14px;
+  color: #6b7280;
   font-style: italic;
 }
 
