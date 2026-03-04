@@ -124,10 +124,21 @@ article {
     display: flex;
     gap: 20px;
     justify-content: space-around;
+    flex-wrap: wrap;
   }
 
   aside li {
     margin-bottom: 0;
+    text-align: center;
   }
+
+aside a {
+  text-decoration: none;
+  color: var(--color-text);
+  background-color: rgba(255,255,255,0.2);
+  padding: 8px 12px;
+  border-radius: 6px;
+  display: block;
+}
 
 }
