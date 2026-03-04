@@ -1,27 +1,32 @@
 :root {
-  --font: Verdana, Geneva, sans-serif;
-  --color-text: #f1f5f9;
-  --color-text-alt: #293241;
-  --color-bg: #3D5A80;
-  --color-bg-header: #293241;
-  --color-bg-aside: #98C1D9;
-  --color-bg-section: #E0FBFC;
+  --font: 'Inter', system-ui, sans-serif;
+  --color-text: #232425;
+  --color-text-alt: #ffffff;
+  --color-text-header: #0e214b;
+  --color-bg: linear-gradient(135deg, #f1f5ff, #dbeafe, #bfdbfe);
+  --color-bg-header: #ffffff;
+  --color-bg-aside: #ffffff;
+  --color-bg-section: #ffffff;
   --spacing-md: 16px;
-  --radius: 8px;
+  --radius: 12px;
+}
+
+body {
+  min-height: 100vh;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font);
 }
 
 header {
+  color: var(--color-text-header);
   background-color: var(--color-bg-header);
   padding: 20px;
   border-radius: var(--radius);
   margin: 20px;
   padding-left: 50px;
-}
-
-body {
-  background-color: var(--color-bg);
-  color: var(--color-text);
-  font-family: var(--font);
+  font-size: 20px;
+  font-weight: bold;
 }
 
 main {
@@ -36,7 +41,7 @@ aside {
   padding-left: 20px;
   padding-top: 6px;
   padding-bottom: 20px;
-  border-radius: 6px;
+  border-radius: var(--radius);
 
 }
 
@@ -60,12 +65,19 @@ aside li {
 section {
   flex: 1;
   background-color: var(--color-bg-section);
-  color: var(--color-text-alt);
+  color: var(--color-text);
   padding: 20px;
-  border-radius: 6px;
+  border-radius: var(--radius);
   display: flex;
   flex-direction: column;
   gap: 12px;
+}
+
+section article {
+  background-color: #FAFAFA;
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin-bottom: 10px;
 }
 
 article {
@@ -86,6 +98,7 @@ article {
   width: 120px;
   font-size: 12px;
   text-align: left;
+  font-style: italic;
 }
 
 .badge {
