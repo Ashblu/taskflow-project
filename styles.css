@@ -154,9 +154,19 @@ article {
     padding: 12px;
   }
 
+header {
+  margin: 12px;
+  padding-left: 20px;
+}
+
   aside {
     width: 100%;
+    margin: 12px;
   }
+
+section {
+  margin: 12px;
+}
 
   aside ul {
     display: flex;
