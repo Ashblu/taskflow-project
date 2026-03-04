@@ -2,7 +2,7 @@
   --font: 'Inter', system-ui, sans-serif;
   --color-text: #232425;
   --color-text-alt: #ffffff;
-  --color-text-header: #1e3a8a;
+  --color-text-header: #232425;
   --color-bg: linear-gradient(135deg, #eef4ff, #dbf0fe, #d1c7fe);
   --color-bg-header: #fdfdfd;
   --color-bg-aside: #f8fafc;
@@ -32,6 +32,8 @@ header {
   background-color: var(--color-bg-header);
   padding: 20px;
   border-radius: var(--radius);
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.04);
   margin: 20px;
   padding-left: 50px;
   font-size: 20px;
@@ -45,7 +47,10 @@ header {
 header h1 {
   display: flex;
   align-items: center;
-  gap: 8px;
+}
+
+.flow {
+  color: #5ea4ff;
 }
 
 main {
@@ -61,6 +66,7 @@ aside {
   padding-top: 6px;
   padding-bottom: 20px;
   border-radius: var(--radius);
+  border: 1px solid #e5e7eb;
   box-shadow: 0 6px 18px rgba(0,0,0,0.06);
 
 }
@@ -88,6 +94,7 @@ section {
   color: var(--color-text);
   padding: 20px;
   border-radius: var(--radius);
+  border: 1px solid #e5e7eb;
   display: flex;
   flex-direction: column;
   gap: 12px;
@@ -125,6 +132,7 @@ article {
   font-size: 14px;
   color: #6b7280;
   font-style: italic;
+  
 }
 
 .badge {
