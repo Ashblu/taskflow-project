@@ -23,23 +23,64 @@ function saveTasks() {
 function addTaskToDOM(task) {
 
   const article = document.createElement("article");
+article.className =
+  "flex items-center justify-between gap-3 rounded-lg border border-slate-200 bg-white px-3 py-2 shadow-sm";
+
+const checkbox = document.createElement("input");
+checkbox.type = "checkbox";
+checkbox.checked = task.completed;
+checkbox.className = "h-4 w-4 accent-slate-600";
+
+checkbox.addEventListener("change", () => {
+  task.completed = checkbox.checked;
+  updateTaskStyle();
+  saveTasks();
+});
 
   const title = document.createElement("span");
-  title.className = "titulo";
+  title.className = "font-medium text-slate-900";
   title.textContent = task.title;
 
   const category = document.createElement("span");
-  category.className = "categoria";
+  category.className = "text-sm text-slate-500";
   category.textContent = task.category;
 
-  const badge = document.createElement("span");
-  badge.className = "badge " + task.priority;
-  badge.textContent =
-    task.priority.charAt(0).toUpperCase() + task.priority.slice(1);
+const badge = document.createElement("span");
+
+let badgeColor = "";
+
+if (task.priority === "alta") {
+  badgeColor = "bg-red-100 text-red-700";
+} else if (task.priority === "media") {
+  badgeColor = "bg-yellow-100 text-yellow-700";
+} else {
+  badgeColor = "bg-green-100 text-green-700";
+}
+
+badge.className =
+  "rounded-full px-2 py-1 text-xs font-semibold " + badgeColor;
+
+badge.textContent =
+  task.priority.charAt(0).toUpperCase() + task.priority.slice(1);
 
   const deleteBtn = document.createElement("button");
   deleteBtn.textContent = "✖";
-  deleteBtn.className = "delete-btn";
+  deleteBtn.className =
+  "text-red-500 hover:text-red-700 transition text-sm";
+
+  function updateTaskStyle() {
+  if (task.completed) {
+    article.className =
+      "flex items-center justify-between gap-3 rounded-lg border border-slate-200 bg-slate-100 px-3 py-2 shadow-sm opacity-70";
+    title.className = "font-medium text-slate-500 line-through";
+    category.className = "text-sm text-slate-400 line-through";
+  } else {
+    article.className =
+      "flex items-center justify-between gap-3 rounded-lg border border-slate-200 bg-white px-3 py-2 shadow-sm";
+    title.className = "font-medium text-slate-900";
+    category.className = "text-sm text-slate-500";
+  }
+}
 
   deleteBtn.addEventListener("click", () => {
     article.remove();
@@ -48,7 +89,7 @@ function addTaskToDOM(task) {
     saveTasks();
   });
 
-  article.append(title, category, badge, deleteBtn);
+  article.append(checkbox, title, category, badge, deleteBtn);
 
   taskList.prepend(article);
 }
@@ -64,11 +105,12 @@ form.addEventListener("submit", (e) => {
 
   if (!title || !category) return;
 
-  const newTask = {
-    title: title,
-    category: category,
-    priority: priority
-  };
+ const newTask = {
+  title: title,
+  category: category,
+  priority: priority,
+  completed: false
+};
 
   tasks.push(newTask);
 

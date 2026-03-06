@@ -71,7 +71,7 @@ aside {
 
 } */
 
-aside ul {
+/* aside ul {
   list-style: none;
   padding: 0;
   margin: 0;
@@ -86,7 +86,7 @@ aside a {
 
 aside li {
   margin-bottom: 10px;
-}
+} */
 
 /* section {
   flex: 1;
@@ -134,7 +134,7 @@ article {
   
 }
 
-.badge {
+/* .badge {
   margin-left: auto;
   padding: 4px 10px;
   border-radius: 999px;
@@ -169,7 +169,7 @@ article {
   font-size: 12px;
   font-weight: 500;
 
-}
+} */
 
 /* .task-form {
   display: flex;
