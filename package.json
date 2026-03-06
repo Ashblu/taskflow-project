@@ -1,14 +1,14 @@
 {
-  "scripts": {
-    "build": "postcss input.css -o output.css",
-    "watch": "postcss input.css -o output.css --watch"
+"scripts": {
+  "build": "node ./node_modules/postcss-cli/index.js input.css -o output.css",
+  "watch": "node ./node_modules/postcss-cli/index.js input.css -o output.css --watch"
 },
 
-
-  "dependencies": {
+"dependencies": {
     "@tailwindcss/postcss": "^4.2.1",
     "postcss": "^8.5.8",
     "postcss-cli": "^11.0.1",
     "tailwindcss": "^4.2.1"
   }
+
 }
