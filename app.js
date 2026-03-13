@@ -9,7 +9,7 @@ const navOpenTasks = document.querySelector("#nav-open-tasks");
 const navClosedTasks = document.querySelector("#nav-closed-tasks");
 const asideLinks = document.querySelectorAll(".aside-link");
 
-const MOON_ICON = "\u263E";
+const MOON_ICON = "\u{1F311}";
 const SUN_ICON = "\u2600\uFE0F";
 
 let tasks = [];
