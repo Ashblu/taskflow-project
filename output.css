@@ -206,6 +206,17 @@
   .visible {
     visibility: visible;
   }
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border-width: 0;
+  }
   .mx-auto {
     margin-inline: auto;
   }
@@ -221,11 +232,17 @@
   .mb-3 {
     margin-bottom: calc(var(--spacing) * 3);
   }
+  .mb-6 {
+    margin-bottom: calc(var(--spacing) * 6);
+  }
   .ml-2 {
     margin-left: calc(var(--spacing) * 2);
   }
   .flex {
     display: flex;
+  }
+  .inline {
+    display: inline;
   }
   .inline-flex {
     display: inline-flex;
@@ -250,12 +267,6 @@
   }
   .w-10 {
     width: calc(var(--spacing) * 10);
-  }
-  .w-36 {
-    width: calc(var(--spacing) * 36);
-  }
-  .w-64 {
-    width: calc(var(--spacing) * 64);
   }
   .w-full {
     width: 100%;
@@ -295,6 +306,9 @@
   }
   .gap-3 {
     gap: calc(var(--spacing) * 3);
+  }
+  .gap-4 {
+    gap: calc(var(--spacing) * 4);
   }
   .rounded-full {
     border-radius: calc(infinity * 1px);
@@ -375,17 +389,14 @@
   .px-4 {
     padding-inline: calc(var(--spacing) * 4);
   }
-  .px-12 {
-    padding-inline: calc(var(--spacing) * 12);
-  }
   .py-1 {
     padding-block: calc(var(--spacing) * 1);
   }
   .py-2 {
     padding-block: calc(var(--spacing) * 2);
   }
-  .py-5 {
-    padding-block: calc(var(--spacing) * 5);
+  .py-4 {
+    padding-block: calc(var(--spacing) * 4);
   }
   .font-sans {
     font-family: var(--font-sans);
@@ -541,6 +552,41 @@
   .focus\:ring-indigo-400 {
     &:focus {
       --tw-ring-color: var(--color-indigo-400);
+    }
+  }
+  .sm\:w-36 {
+    @media (width >= 40rem) {
+      width: calc(var(--spacing) * 36);
+    }
+  }
+  .sm\:w-auto {
+    @media (width >= 40rem) {
+      width: auto;
+    }
+  }
+  .md\:w-64 {
+    @media (width >= 48rem) {
+      width: calc(var(--spacing) * 64);
+    }
+  }
+  .md\:flex-row {
+    @media (width >= 48rem) {
+      flex-direction: row;
+    }
+  }
+  .md\:px-0 {
+    @media (width >= 48rem) {
+      padding-inline: calc(var(--spacing) * 0);
+    }
+  }
+  .md\:px-12 {
+    @media (width >= 48rem) {
+      padding-inline: calc(var(--spacing) * 12);
+    }
+  }
+  .md\:py-5 {
+    @media (width >= 48rem) {
+      padding-block: calc(var(--spacing) * 5);
     }
   }
   .dark\:border-slate-600 {

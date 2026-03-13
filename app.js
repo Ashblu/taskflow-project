@@ -9,16 +9,32 @@ const navOpenTasks = document.querySelector("#nav-open-tasks");
 const navClosedTasks = document.querySelector("#nav-closed-tasks");
 const asideLinks = document.querySelectorAll(".aside-link");
 
+const MOON_ICON = "\u263E";
+const SUN_ICON = "\u2600\uFE0F";
+
 let tasks = [];
 const taskElements = new WeakMap();
 let currentFilter = "all";
 
+function updateThemeButton(isDark) {
+  themeToggle.textContent = isDark ? SUN_ICON : MOON_ICON;
+  themeToggle.setAttribute(
+    "aria-label",
+    isDark ? "Activar modo claro" : "Activar modo oscuro"
+  );
+  themeToggle.setAttribute("aria-pressed", String(isDark));
+}
+
 function setActiveNav(link) {
   if (!link) return;
+
   asideLinks.forEach((item) => {
     item.classList.remove("bg-slate-100", "dark:bg-slate-700", "font-semibold");
+    item.setAttribute("aria-pressed", "false");
   });
+
   link.classList.add("bg-slate-100", "dark:bg-slate-700", "font-semibold");
+  link.setAttribute("aria-pressed", "true");
 }
 
 function applyFilter() {
@@ -37,51 +53,44 @@ function applyFilter() {
   });
 }
 
-// ================================
-// Gestión del tema claro/oscuro
-// ================================
 const savedTheme = localStorage.getItem("theme");
+const isDarkTheme = savedTheme === "dark";
 
-// Comprobar y aplicar el tema guardado
-if (savedTheme === "dark") {
+if (isDarkTheme) {
   document.body.classList.add("dark");
-  themeToggle.textContent = "☀️";
-} else {
-  themeToggle.textContent = "🌑";
 }
 
-// Cambiar tema con el botón
+updateThemeButton(isDarkTheme);
+
 themeToggle.addEventListener("click", () => {
   const isDark = document.body.classList.toggle("dark");
   localStorage.setItem("theme", isDark ? "dark" : "light");
-  themeToggle.textContent = isDark ? "☀️" : "🌑";
+  updateThemeButton(isDark);
 });
 
-// ========================
-// Cargar tareas guardadas
-// ========================
 const savedTasks = localStorage.getItem("tasks");
 
 if (savedTasks) {
-  tasks = JSON.parse(savedTasks);
-  tasks.forEach(addTaskToDOM);
+  try {
+    tasks = JSON.parse(savedTasks);
+    tasks.forEach(addTaskToDOM);
+  } catch (error) {
+    console.error("No se pudieron recuperar las tareas guardadas:", error);
+    localStorage.removeItem("tasks");
+  }
 }
 
-// ==============================
-// Función para guardar tareas
-// ==============================
 function saveTasks() {
   try {
     localStorage.setItem("tasks", JSON.stringify(tasks));
   } catch (error) {
     console.error("Error al guardar las tareas en localStorage:", error);
-    alert("No se pudo guardar la tarea. Puede que tu navegador tenga desactivado el almacenamiento local o esté lleno.");
+    alert(
+      "No se pudo guardar la tarea. Puede que el almacenamiento local este desactivado o lleno."
+    );
   }
 }
 
-// ================================================
-// Devuelve clases TailwindCSS según la prioridad
-// ================================================
 function getPriorityClasses(priority) {
   if (priority === "alta") {
     return "bg-red-100 text-red-700";
@@ -92,54 +101,45 @@ function getPriorityClasses(priority) {
   return "bg-green-100 text-green-700";
 }
 
-// =====================================
-// Crea un elemento visual para la tarea
-// =====================================
 function createTaskElement(task) {
   const article = document.createElement("article");
+  article.setAttribute("role", "listitem");
   article.className =
-    "flex items-center justify-between gap-3 rounded-lg border border-slate-200 bg-white dark:bg-slate-800 dark:border-slate-700 px-3 py-2 shadow-sm";
+    "flex items-center justify-between gap-3 rounded-lg border border-slate-200 bg-white px-3 py-2 shadow-sm dark:border-slate-700 dark:bg-slate-800";
 
-  // Checkbox para completar tarea
   const checkbox = document.createElement("input");
   checkbox.type = "checkbox";
   checkbox.checked = task.completed;
   checkbox.className = "h-4 w-4 accent-slate-600";
+  checkbox.setAttribute("aria-label", `Marcar tarea ${task.title} como completada`);
 
-  // Título de la tarea
   const title = document.createElement("span");
   title.className = "font-medium text-slate-900 dark:text-slate-100";
   title.textContent = task.title;
 
-  // Categoría de la tarea
   const category = document.createElement("span");
   category.className = "text-sm text-slate-500 dark:text-slate-300";
   category.textContent = task.category;
 
-  // Insignia de prioridad
   const badge = document.createElement("span");
-  const badgeColor = getPriorityClasses(task.priority);
   badge.className =
-    "rounded-full px-2 py-1 text-xs font-semibold " + badgeColor;
+    "rounded-full px-2 py-1 text-xs font-semibold " +
+    getPriorityClasses(task.priority);
   badge.textContent =
     task.priority.charAt(0).toUpperCase() + task.priority.slice(1);
 
-  // Botón para eliminar tarea
   const deleteBtn = document.createElement("button");
-  deleteBtn.textContent = "✖";
+  deleteBtn.type = "button";
+  deleteBtn.textContent = "\u00D7";
   deleteBtn.className =
-    "ml-2 border-0 bg-transparent text-gray-400 hover:text-red-500 cursor-pointer text-sm transition-colors";
+    "ml-2 cursor-pointer border-0 bg-transparent text-sm text-gray-400 transition-colors hover:text-red-500";
+  deleteBtn.setAttribute("aria-label", `Eliminar tarea ${task.title}`);
 
-  // Añadir todos los elementos al artículo
   article.append(checkbox, title, category, badge, deleteBtn);
 
-  // Retornar todos los nodos/elementos creados
   return { article, checkbox, title, category, badge, deleteBtn };
 }
 
-// =====================================================
-// Actualiza los estilos según si la tarea está completada
-// =====================================================
 function updateTaskStyle(task, elements) {
   const { article, title, category } = elements;
 
@@ -159,7 +159,6 @@ function updateTaskStyle(task, elements) {
     "hover:shadow-lg"
   ];
 
-  // Clases cuando la tarea está completada
   const completedArticleClasses = [
     ...baseArticleClasses,
     "border-slate-200",
@@ -169,7 +168,6 @@ function updateTaskStyle(task, elements) {
     "opacity-70"
   ].join(" ");
 
-  // Clases cuando la tarea está activa
   const activeArticleClasses = [
     ...baseArticleClasses,
     "border-slate-200",
@@ -178,7 +176,6 @@ function updateTaskStyle(task, elements) {
     "dark:border-slate-700"
   ].join(" ");
 
-  // Clases para el título y categoría, dependiendo del estado
   const completedTitleClasses =
     "font-medium text-slate-500 dark:text-slate-400 line-through";
   const activeTitleClasses =
@@ -199,13 +196,9 @@ function updateTaskStyle(task, elements) {
   }
 }
 
-// ===================================================================
-// Añade los eventos relacionados a la tarea creada (completar, borrar)
-// ===================================================================
 function attachTaskEventHandlers(task, elements) {
   const { article, checkbox, deleteBtn } = elements;
 
-  // Evento para marcar tarea como completada/no completada
   checkbox.addEventListener("change", () => {
     task.completed = checkbox.checked;
     updateTaskStyle(task, elements);
@@ -213,7 +206,6 @@ function attachTaskEventHandlers(task, elements) {
     applyFilter();
   });
 
-  // Evento para eliminar tarea
   deleteBtn.addEventListener("click", () => {
     article.remove();
     tasks = tasks.filter((t) => t !== task);
@@ -222,17 +214,10 @@ function attachTaskEventHandlers(task, elements) {
   });
 }
 
-// ==========================================================
-// Añade la tarea al DOM (a la lista de tareas en pantalla)
-// ==========================================================
 function addTaskToDOM(task) {
   const elements = createTaskElement(task);
 
-  // Aplicar estilo inicial según si la tarea está completada o no
-  // (importante para que, al recargar la página, las tareas completadas
-  // sigan viéndose en gris y con el texto tachado).
   updateTaskStyle(task, elements);
-
   taskElements.set(task, elements);
   attachTaskEventHandlers(task, elements);
   taskList.prepend(elements.article);
@@ -240,39 +225,33 @@ function addTaskToDOM(task) {
 }
 
 if (navHome) {
-  navHome.addEventListener("click", (event) => {
-    event.preventDefault();
+  navHome.addEventListener("click", () => {
     currentFilter = "all";
     applyFilter();
-    setActiveNav(event.currentTarget);
+    setActiveNav(navHome);
   });
 }
 
 if (navOpenTasks) {
-  navOpenTasks.addEventListener("click", (event) => {
-    event.preventDefault();
+  navOpenTasks.addEventListener("click", () => {
     currentFilter = "open";
     applyFilter();
-    setActiveNav(event.currentTarget);
+    setActiveNav(navOpenTasks);
   });
 }
 
 if (navClosedTasks) {
-  navClosedTasks.addEventListener("click", (event) => {
-    event.preventDefault();
+  navClosedTasks.addEventListener("click", () => {
     currentFilter = "closed";
     applyFilter();
-    setActiveNav(event.currentTarget);
+    setActiveNav(navClosedTasks);
   });
 }
 
 setActiveNav(navHome);
 
-// =============================================
-// Evento para el envío del formulario de tareas
-// =============================================
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
+form.addEventListener("submit", (event) => {
+  event.preventDefault();
 
   const title = taskInput.value.trim();
   const category = categoryInput.value.trim();
@@ -280,22 +259,19 @@ form.addEventListener("submit", (e) => {
 
   if (!title || !category) return;
 
-  // Crear nuevo objeto de tarea
   const newTask = {
-    title: title,
-    category: category,
-    priority: priority,
+    title,
+    category,
+    priority,
     completed: false
   };
 
-  // Añadir la tarea al array y guardar
   tasks.push(newTask);
   saveTasks();
-
-  // Añadir tarea al DOM y resetear el formulario
   addTaskToDOM(newTask);
 
   taskInput.value = "";
   categoryInput.value = "";
   priorityInput.value = "alta";
+  taskInput.focus();
 });

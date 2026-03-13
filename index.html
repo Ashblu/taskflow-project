@@ -4,8 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>TaskFlow Project</title>
+    <meta
+      name="description"
+      content="Aplicacion web para gestionar tareas con categorias, prioridades y filtros."
+    />
     <link rel="stylesheet" href="output.css" />
-    <!--<link rel="stylesheet" href="styles.css" />-->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -18,95 +21,113 @@
     class="min-h-screen font-sans bg-gradient-to-br from-indigo-100 via-sky-100 to-purple-100 dark:from-slate-900 dark:via-indigo-950 dark:to-slate-900"
   >
     <header
-      class="dark:bg-slate-800/80 dark:border-slate-700 dark:text-slate-100 max-w-[1500px] mx-auto mt-5 px-12 py-5 bg-white border border-gray-200 rounded-xl shadow-lg"
+      class="mx-auto mt-5 max-w-[1500px] rounded-xl border border-gray-200 bg-white px-4 py-4 shadow-lg dark:border-slate-700 dark:bg-slate-800/80 dark:text-slate-100 md:px-12 md:py-5"
     >
-      <div class="flex items-center justify-between w-full">
+      <div class="flex w-full items-center justify-between gap-4">
         <h1 class="flex items-center text-3xl font-bold">
-          <img src="icon.png" alt="logo" class="w-9 h-9 mr-2" />
+          <img src="icon.png" alt="Logo de TaskFlow" class="mr-2 h-9 w-9" />
           Task<span class="text-[#8d65c5]">Flow</span>
         </h1>
 
         <button
           id="theme-toggle"
-          class="flex h-10 w-10 items-center justify-center rounded-full border border-gray-200 bg-white text-xl transition hover:bg-gray-100 dark:bg-slate-800 dark:border-slate-600 dark:text-slate-100 dark:hover:bg-slate-700"
+          type="button"
+          aria-label="Activar modo oscuro"
+          aria-pressed="false"
+          class="flex h-10 w-10 items-center justify-center rounded-full border border-gray-200 bg-white text-xl transition hover:bg-gray-100 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100 dark:hover:bg-slate-700"
         >
-          🌑
+          &#9790;
         </button>
       </div>
     </header>
 
-    <main class="max-w-[1500px] mx-auto flex gap-3 mt-5">
+    <main
+      class="mx-auto mt-5 mb-6 flex max-w-[1500px] flex-col gap-3 px-4 md:flex-row md:px-0"
+    >
       <aside
-        class="dark:bg-slate-800/80 dark:border-slate-700 dark:text-slate-100 w-64 bg-white border border-gray-200 rounded-xl shadow-lg p-5"
+        class="w-full rounded-xl border border-gray-200 bg-white p-5 shadow-lg dark:border-slate-700 dark:bg-slate-800/80 dark:text-slate-100 md:w-64"
       >
-        <!-- <h3>Menú</h3> -->
-        <nav>
+        <nav aria-label="Filtros de tareas">
           <ul class="mb-2 flex flex-col gap-2 text-slate-900">
             <li>
-              <a
+              <button
                 id="nav-home"
-                class="aside-link inline-flex items-center rounded-lg px-2 py-1 transition-colors text-slate-900 dark:text-slate-100 hover:bg-slate-100 hover:text-slate-900 dark:hover:bg-slate-700 dark:hover:text-slate-100"
-                href="#"
+                type="button"
+                aria-controls="task-list"
+                aria-pressed="false"
+                class="aside-link inline-flex w-full items-center rounded-lg px-2 py-1 text-slate-900 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:text-slate-100 dark:hover:bg-slate-700 dark:hover:text-slate-100"
               >
-                🟣 Inicio
-              </a>
+                Inicio
+              </button>
             </li>
             <li>
-              <a
+              <button
                 id="nav-open-tasks"
-                class="aside-link inline-flex items-center rounded-lg px-2 py-1 transition-colors text-slate-900 dark:text-slate-100 hover:bg-slate-100 hover:text-slate-900 dark:hover:bg-slate-700 dark:hover:text-slate-100"
-                href="#"
+                type="button"
+                aria-controls="task-list"
+                aria-pressed="false"
+                class="aside-link inline-flex w-full items-center rounded-lg px-2 py-1 text-slate-900 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:text-slate-100 dark:hover:bg-slate-700 dark:hover:text-slate-100"
               >
-                ☑️ Tareas Abiertas
-              </a>
+                Tareas abiertas
+              </button>
             </li>
             <li>
-              <a
+              <button
                 id="nav-closed-tasks"
-                class="aside-link inline-flex items-center rounded-lg px-2 py-1 transition-colors text-slate-900 dark:text-slate-100 hover:bg-slate-100 hover:text-slate-900 dark:hover:bg-slate-700 dark:hover:text-slate-100"
-                href="#"
+                type="button"
+                aria-controls="task-list"
+                aria-pressed="false"
+                class="aside-link inline-flex w-full items-center rounded-lg px-2 py-1 text-slate-900 transition-colors hover:bg-slate-100 hover:text-slate-900 dark:text-slate-100 dark:hover:bg-slate-700 dark:hover:text-slate-100"
               >
-                ✖️ Tareas Cerradas
-              </a>
+                Tareas cerradas
+              </button>
             </li>
             <li>
-              <a
-                class="aside-link inline-flex items-center rounded-lg px-2 py-1 transition-colors text-slate-900 dark:text-slate-100 hover:bg-slate-100 hover:text-slate-900 dark:hover:bg-slate-700 dark:hover:text-slate-100"
-                href="#"
+              <span
+                class="inline-flex items-center rounded-lg px-2 py-1 text-slate-400 dark:text-slate-500"
               >
-                ✉️ Contacto
-              </a>
+                Contacto
+              </span>
             </li>
           </ul>
         </nav>
       </aside>
 
       <section
-        class="dark:bg-slate-800/80 dark:border-slate-700 dark:text-slate-100 flex-1 bg-white border border-gray-200 rounded-xl shadow-lg p-5 flex flex-col gap-3"
+        class="flex flex-1 flex-col gap-3 rounded-xl border border-gray-200 bg-white p-5 shadow-lg dark:border-slate-700 dark:bg-slate-800/80 dark:text-slate-100"
       >
+        <h2 class="sr-only">Gestor de tareas</h2>
         <form
           id="task-form"
-          class="dark:bg-slate-900/60 dark:border-slate-700 bg-white border border-gray-200 rounded-xl shadow-lg p-4 flex flex-wrap gap-3"
+          class="flex flex-wrap gap-3 rounded-xl border border-gray-200 bg-white p-4 shadow-lg dark:border-slate-700 dark:bg-slate-900/60"
         >
+          <label class="sr-only" for="task-input">Nombre de la tarea</label>
           <input
-            class="flex-1 min-w-[220px] rounded-lg border border-gray-300 px-3 py-2 outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-slate-800 dark:text-slate-100"
+            class="min-w-[220px] flex-1 rounded-lg border border-gray-300 px-3 py-2 outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-slate-800 dark:text-slate-100"
             type="text"
             id="task-input"
+            name="task"
             placeholder="Tarea"
+            autocomplete="off"
             required
           />
 
+          <label class="sr-only" for="category-input">Categoria</label>
           <input
-            class="flex-1 min-w-[180px] rounded-lg border border-gray-300 px-3 py-2 outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-slate-800 dark:text-slate-100"
+            class="min-w-[180px] flex-1 rounded-lg border border-gray-300 px-3 py-2 outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-slate-800 dark:text-slate-100"
             type="text"
             id="category-input"
-            placeholder="Categoría"
+            name="category"
+            placeholder="Categoria"
+            autocomplete="off"
             required
           />
 
+          <label class="sr-only" for="priority-input">Prioridad</label>
           <select
             id="priority-input"
-            class="w-36 rounded-lg border border-gray-300 px-3 py-2 outline-none focus:ring-2 focus:ring-indigo-400 dark:bg-slate-800 dark:text-slate-100 dark:border-slate-600"
+            name="priority"
+            class="w-full rounded-lg border border-gray-300 px-3 py-2 outline-none focus:ring-2 focus:ring-indigo-400 dark:border-slate-600 dark:bg-slate-800 dark:text-slate-100 sm:w-36"
           >
             <option value="alta">Alta</option>
             <option value="media">Media</option>
@@ -115,15 +136,20 @@
 
           <button
             type="submit"
-            class="rounded-lg bg-[#8d65c5] px-4 py-2 font-semibold text-white hover:bg-indigo-600 transition"
+            class="w-full rounded-lg bg-[#8d65c5] px-4 py-2 font-semibold text-white transition hover:bg-indigo-600 sm:w-auto"
           >
-            Añadir
+            Anadir
           </button>
         </form>
 
-        <div id="task-list"></div>
+        <div
+          id="task-list"
+          role="list"
+          aria-live="polite"
+          aria-label="Lista de tareas"
+        ></div>
       </section>
     </main>
-    <script src="app.js"></script>
+    <script src="app.js" defer></script>
   </body>
 </html>
